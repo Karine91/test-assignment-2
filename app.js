@@ -1,9 +1,9 @@
 import "./src/assets/styles/main.scss";
 
-import Column from "./src/components/Column.js";
+import AddColumn from "./src/components/AddColumn.js";
 
-const column = new Column();
+const addColumnBuilder = new AddColumn();
 document.addEventListener("DOMContentLoaded", () => {
   const app = document.getElementById("app");
-  app.appendChild(column.render());
+  app.appendChild(addColumnBuilder.render());
 });
