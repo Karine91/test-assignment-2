@@ -68,6 +68,18 @@
   }
 }
 
+.add-column-element {
+  display: flex;
+  flex-direction: column;
+  background: $gray;
+  width: 272px;
+  border-radius: 3px;
+  overflow: hidden;
+  max-height: 100vh;
+  padding: 15px;
+  flex-shrink: 0;
+}
+
 .add-icon {
   width: 100%;
   height: 100%;
@@ -78,4 +90,9 @@
   &:hover {
     fill: darken($textLight, 10);
   }
+}
+
+.add-task-text {
+  resize: none;
+  height: 55px;
 }

@@ -1,5 +1,6 @@
 import Board from "./Board";
 import ColumnModel from "../models/Column";
+import TasksModel from "../models/Task";
 
 class App {
   constructor() {
@@ -22,8 +23,20 @@ class App {
 
   async init() {
     const columns = await ColumnModel.fetchAll();
-    console.log(columns);
-    this.render(columns);
+    const tasks = await TasksModel.fetchAll();
+
+    const fullData = columns.map((column) => {
+      const columnTasks = tasks.filter(
+        (task) => task.columnId === column.id
+      );
+      return {
+        ...column,
+        tasks: columnTasks,
+      };
+    });
+
+    console.log(fullData);
+    this.render(fullData);
   }
 }
 

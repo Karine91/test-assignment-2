@@ -1,19 +1,33 @@
 @import "./variables.scss";
 
-.columns-list {
+.column-list {
   display: flex;
-  align-items: flex-start;
+  margin: 0 -6px;
+
+  overflow-x: auto;
+  overflow-y: hidden;
+
+  flex: 1;
+}
+
+.column-wrapper {
+  display: flex;
+  flex-direction: column;
+
+  margin: 0 6px;
+  flex-shrink: 0;
 }
 
 .column {
-  display: flex;
-  flex-direction: column;
   background: $gray;
   width: 272px;
   border-radius: 3px;
   overflow: hidden;
   max-height: 100vh;
   padding: 15px;
-  margin: 0 6px;
-  flex-shrink: 0;
+
+  &__title {
+    font-weight: bold;
+    padding-bottom: 12px;
+  }
 }

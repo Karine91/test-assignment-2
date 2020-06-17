@@ -4,11 +4,18 @@ import PlusIcon from "../assets/icons/plus.svg";
 import CloseIcon from "../assets/icons/close.svg";
 
 class AddForm {
-  constructor(placeholder, btnTitle, addTitle, inputName) {
+  constructor(
+    placeholder,
+    btnTitle,
+    addTitle,
+    inputName,
+    tag = "input"
+  ) {
     this.placeholder = placeholder;
     this.btnTitle = btnTitle;
     this.addTitle = addTitle;
     this.inputName = inputName;
+    this.tag = tag;
 
     this.open = false;
     this.formData = {};
@@ -51,12 +58,13 @@ class AddForm {
   }
 
   getInputElement() {
-    const input = document.createElement("input");
+    const input = document.createElement(this.tag);
     input.className = "add-form__text";
     input.placeholder = this.placeholder;
     input.name = this.inputName;
     input.onchange = this.onInputChange;
-    this.input = input;
+    input.autofocus = true;
+
     return input;
   }
 
@@ -80,7 +88,8 @@ class AddForm {
     const form = document.createElement("form");
     form.onsubmit = this.onSubmit;
     form.classList.add("add-form");
-    form.appendChild(this.getInputElement());
+    this.input = this.getInputElement();
+    form.appendChild(this.input);
     const actionsWrapper = document.createElement("div");
     actionsWrapper.className = "add-form__actions";
     actionsWrapper.appendChild(this.getButtonElement());

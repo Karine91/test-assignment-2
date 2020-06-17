@@ -1,4 +1,8 @@
 .board {
+  position: relative;
+  flex-grow: 1;
+  padding: 0 6px;
   display: flex;
-  margin: 0 -6px;
+  flex-flow: column;
+  padding: 20px;
 }

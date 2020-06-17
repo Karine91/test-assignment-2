@@ -1,11 +1,10 @@
 import AddForm from "./AddForm";
 
 import Column from "../models/Column";
-import "../assets/styles/add-column-form.scss";
 
 import { addColumnEvent } from "../app";
 class AddColumn extends AddForm {
-  constructor(columnAddEvent) {
+  constructor() {
     super(
       "Введите название колонки",
       "Добавить колонку",
@@ -13,10 +12,6 @@ class AddColumn extends AddForm {
       "title"
     );
   }
-
-  // getInputElement() {
-  //   return `<textarea name="description" class="add-form__text" placeholder=${this.placeholder}></textarea>`;
-  // }
 
   onSubmit(e) {
     super.onSubmit(e);
@@ -30,7 +25,7 @@ class AddColumn extends AddForm {
   }
 
   render() {
-    this.root.className = "add-column-form";
+    this.root.classList.add("add-column-element");
     return super.render();
   }
 }
