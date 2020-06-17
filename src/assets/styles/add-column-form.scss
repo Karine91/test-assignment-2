@@ -1,0 +1,13 @@
+@import "./variables.scss";
+
+.add-column-form {
+  display: flex;
+  flex-direction: column;
+  background: $gray;
+  width: 272px;
+  border-radius: 3px;
+  overflow: hidden;
+  max-height: 100vh;
+  padding: 15px;
+  flex-shrink: 0;
+}

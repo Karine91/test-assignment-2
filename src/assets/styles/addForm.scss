@@ -1,3 +1,81 @@
-.add-block {
-  color: white;
+@import "./variables.scss";
+@import "./mixins.scss";
+
+.add-form {
+  &__text {
+    width: 100%;
+    padding: 8px 12px;
+    font-family: $fontFamily;
+    border: 1px solid transparent;
+    border-radius: 3px;
+    box-shadow: 0px 1px 4px rgba(9, 45, 66, 0.25);
+    transition: all ease 0.3s;
+
+    &:focus {
+      outline: none;
+      border: 1px solid $green;
+    }
+
+    @include placeholder {
+      color: $placeholder;
+    }
+  }
+
+  &__button {
+    font-family: $fontFamily;
+    background: $green;
+    border: 2px solid transparent;
+    padding: 8px;
+    color: $white;
+    font-weight: bold;
+    border-radius: 3px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all ease 0.3s;
+
+    &:hover {
+      background: darken($green, 10);
+      border: 2px solid $green;
+    }
+    &:focus {
+      outline: none;
+      border: 2px solid $green;
+    }
+  }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 8px;
+  }
+
+  &__icon-wrapper {
+    width: 15px;
+    height: 15px;
+    cursor: pointer;
+  }
+}
+
+.add-element {
+  color: $textLight;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+
+  &__icon-wrapper {
+    margin-right: 8px;
+  }
+}
+
+.add-icon {
+  width: 100%;
+  height: 100%;
+  fill: $textLight;
+
+  transition: fill ease 0.3s;
+
+  &:hover {
+    fill: darken($textLight, 10);
+  }
 }

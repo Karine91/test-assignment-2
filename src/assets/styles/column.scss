@@ -1,0 +1,19 @@
+@import "./variables.scss";
+
+.columns-list {
+  display: flex;
+  align-items: flex-start;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  background: $gray;
+  width: 272px;
+  border-radius: 3px;
+  overflow: hidden;
+  max-height: 100vh;
+  padding: 15px;
+  margin: 0 6px;
+  flex-shrink: 0;
+}

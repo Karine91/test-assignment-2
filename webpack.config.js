@@ -1,13 +1,16 @@
 const path = require("path");
+
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const DotenvWebpackPlugin = require("dotenv-webpack");
 const ImageminPlugin = require("imagemin-webpack-plugin")
   .default;
 
 module.exports = (env, argv) => {
-  const isDevMode = argv.mode === "development";
+  const isDevMode = argv.mode !== "production";
+
   return {
-    entry: "./app.js",
+    entry: "./src/app.js",
     mode: argv.mode || "development",
     output: {
       path: path.join(__dirname, "dist"),
@@ -22,7 +25,6 @@ module.exports = (env, argv) => {
         },
         {
           test: /\.s?css$/,
-          sideEffects: true,
           use: [
             {
               loader: MiniCssExtractPlugin.loader,
@@ -53,6 +55,25 @@ module.exports = (env, argv) => {
             name: "[name].[ext]",
           },
         },
+        {
+          test: /.svg$/,
+          use: [
+            "svg-sprite-loader",
+            "svg-transform-loader",
+            {
+              loader: "svgo-loader",
+              options: {
+                plugins: [
+                  {
+                    removeAttrs: {
+                      attrs: "(stroke|fill)",
+                    },
+                  },
+                ],
+              },
+            },
+          ],
+        },
       ],
     },
     plugins: [
@@ -68,6 +89,7 @@ module.exports = (env, argv) => {
           quality: "95-100",
         },
       }),
+      new DotenvWebpackPlugin(),
     ],
     devtool: "source-map",
     devServer: {
