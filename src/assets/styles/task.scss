@@ -6,7 +6,7 @@
 .tasks-list {
   padding: 5px;
   &:empty {
-    display: none;
+    padding: 0;
   }
 }
 
@@ -42,5 +42,5 @@
 }
 
 .add-new-task {
-  padding-top: 10px;
+  padding: 10px 5px 5px;
 }

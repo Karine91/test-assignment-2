@@ -7,6 +7,8 @@ import Modal from "./Modal";
 import Menu from "./Menu";
 import ColumnModel from "../models/Column";
 
+import Sortable from "sortablejs";
+
 import { deleteColumnEvent } from "../app";
 
 class Column {
@@ -98,6 +100,11 @@ class Column {
     const header = this.createHeaderElement();
     columnElement.appendChild(header);
     const tasks = new Tasks(this.tasks, this.id).render();
+
+    const sortable = Sortable.create(tasks, {
+      group: "columns",
+    });
+
     const tasksWrapper = document.createElement("div");
     tasksWrapper.className = "tasks-wrapper";
     tasksWrapper.appendChild(tasks);
