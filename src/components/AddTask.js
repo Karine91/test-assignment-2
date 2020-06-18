@@ -2,42 +2,34 @@ import AddForm from "./AddForm";
 
 import Task from "../models/Task";
 
-import { addTaskEvent } from "../app";
+import AddWrapper from "./AddWrapper";
+import AddFormTask from "./AddFormTask";
+import AddElement from "./AddElement";
 
-class AddTask extends AddForm {
+class AddTask extends AddWrapper {
   constructor(columnId) {
-    super(
-      "Введите название карточки",
-      "Добавить карточку",
-      "Добавить еще одну карточку",
-      "description",
-      "textarea"
-    );
+    super();
     this.columnId = columnId;
   }
 
-  getInputElement() {
-    const input = super.getInputElement();
-    input.classList.add("add-task-text");
-    return input;
+  getElement() {
+    return this.open
+      ? new AddFormTask(
+          this.onClose,
+          this.columnId
+        ).render()
+      : new AddElement(
+          "Добавить еще одну карточку",
+          this.onAdd
+        ).render();
   }
 
-  onSubmit(e) {
-    super.onSubmit(e);
-    new Task(this.formData.description, this.columnId)
-      .save()
-      .then((ref) => {
-        this.onCloseClick();
-        addTaskEvent.fire({
-          id: ref.key,
-          description: this.formData.description,
-          columnId: this.columnId,
-        });
-      });
-  }
   render() {
-    this.root.classList.add("add-task-element");
-    return super.render();
+    this.element = this.getElement();
+    this.root.className = "add-new-task";
+    this.root.appendChild(this.element);
+
+    return this.root;
   }
 }
 

@@ -1,8 +1,9 @@
 .board {
   position: relative;
   flex-grow: 1;
-  padding: 0 6px;
+  padding: 20px;
   display: flex;
   flex-flow: column;
-  padding: 20px;
+
+  height: 100vh;
 }

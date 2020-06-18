@@ -1,34 +1,31 @@
 import "../assets/styles/addForm.scss";
 
-import PlusIcon from "../assets/icons/plus.svg";
 import CloseIcon from "../assets/icons/close.svg";
 
 class AddForm {
-  constructor(
+  constructor({
     placeholder,
     btnTitle,
-    addTitle,
     inputName,
-    tag = "input"
-  ) {
+    onCloseHandler,
+    tag = "input",
+    inputValue = "",
+  }) {
     this.placeholder = placeholder;
     this.btnTitle = btnTitle;
-    this.addTitle = addTitle;
     this.inputName = inputName;
+    this.inputValue = inputValue;
+    this.onCloseHandler = onCloseHandler;
     this.tag = tag;
 
-    this.open = false;
     this.formData = {};
 
-    this.element = null;
     this.root = document.createElement("div");
     this.input = null;
 
-    this.onAdd = this.onAdd.bind(this);
     this.render = this.render.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.onCloseClick = this.onCloseClick.bind(this);
-    this.updateRender = this.updateRender.bind(this);
     this.onInputChange = this.onInputChange.bind(this);
   }
 
@@ -36,20 +33,9 @@ class AddForm {
     e.preventDefault();
   }
 
-  updateRender() {
-    this.element.remove();
-    this.render();
-  }
-
-  onAdd() {
-    this.open = true;
-    this.updateRender();
-  }
-
   onCloseClick() {
-    this.open = false;
     this.input.value = "";
-    this.updateRender();
+    this.onCloseHandler();
   }
 
   onInputChange(e) {
@@ -62,9 +48,8 @@ class AddForm {
     input.className = "add-form__text";
     input.placeholder = this.placeholder;
     input.name = this.inputName;
+    input.value = this.inputValue;
     input.onchange = this.onInputChange;
-    input.autofocus = true;
-
     return input;
   }
 
@@ -79,12 +64,12 @@ class AddForm {
   getCloseElement() {
     const close = document.createElement("div");
     close.className = "add-form__icon-wrapper";
-    close.innerHTML = `<svg class="add-icon add-form__icon"><use xlink:href="#${CloseIcon.id}" /></svg>`;
+    close.innerHTML = `<svg class="icon add-form__icon"><use xlink:href="#${CloseIcon.id}" /></svg>`;
     close.onclick = this.onCloseClick;
     return close;
   }
 
-  getFormElement() {
+  render() {
     const form = document.createElement("form");
     form.onsubmit = this.onSubmit;
     form.classList.add("add-form");
@@ -96,29 +81,11 @@ class AddForm {
     actionsWrapper.appendChild(this.getCloseElement());
     form.appendChild(actionsWrapper);
 
+    setTimeout(() => {
+      this.input.focus();
+    }, 0);
+
     return form;
-  }
-
-  getAddElement() {
-    const addElement = document.createElement("div");
-    addElement.classList.add("add-element");
-    addElement.innerHTML = `
-      <div class="add-form__icon-wrapper add-element__icon-wrapper"><svg class="add-icon"><use xlink:href="#${PlusIcon.id}" /></svg></div> ${this.addTitle}
-    `;
-    addElement.onclick = this.onAdd;
-    return addElement;
-  }
-
-  getElement() {
-    return this.open
-      ? this.getFormElement()
-      : this.getAddElement();
-  }
-
-  render() {
-    this.element = this.getElement();
-    this.root.appendChild(this.element);
-    return this.root;
   }
 }
 

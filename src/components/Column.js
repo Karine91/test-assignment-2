@@ -1,9 +1,7 @@
 import "../assets/styles/column.scss";
-import "../assets/styles/task.scss";
-
 import AddTask from "./AddTask";
+import Tasks from "./Tasks";
 
-import { addTaskEvent } from "../app";
 class Column {
   constructor({ id, title, tasks = [] }) {
     this.id = id;
@@ -11,19 +9,10 @@ class Column {
     this.tasks = tasks;
 
     this.root = document.createElement("div");
-    this.tasksListElement = null;
-
-    this.addTask = this.addTask.bind(this);
-    this.subId = addTaskEvent.subscribe(this.addTask);
   }
 
-  addTask(task) {
-    if (this.id === task.columnId) {
-      this.tasks.push(task);
-      this.tasksListElement.appendChild(
-        this.createTaskElement(task)
-      );
-    }
+  createAddNewTaskElement() {
+    return new AddTask(this.id).render();
   }
 
   createHeaderElement() {
@@ -33,34 +22,18 @@ class Column {
     return div;
   }
 
-  createAddNewTaskElement() {
-    return new AddTask(this.id).render();
-  }
-
-  createTaskElement(task) {
-    const div = document.createElement("div");
-    div.innerText = task.description;
-    div.className = "task";
-    return div;
-  }
-
   render() {
     this.root.classList = "column";
     const header = this.createHeaderElement();
     this.root.appendChild(header);
-
-    this.tasksListElement = document.createElement("div");
-    this.tasksListElement.className = "tasks-list";
-
-    this.tasks.forEach((task) => {
-      this.tasksListElement.appendChild(
-        this.createTaskElement(task)
-      );
-    });
-
-    this.root.appendChild(this.tasksListElement);
+    const tasks = new Tasks(this.tasks, this.id).render();
+    const tasksWrapper = document.createElement("div");
+    tasksWrapper.className = "tasks-wrapper";
+    tasksWrapper.appendChild(tasks);
+    this.root.appendChild(tasksWrapper);
 
     this.root.appendChild(this.createAddNewTaskElement());
+
     return this.root;
   }
 }

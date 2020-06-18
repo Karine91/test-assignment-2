@@ -1,0 +1,16 @@
+@import "./variables.scss";
+
+.add-element {
+  color: $textLight;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  user-select: none;
+
+  &__icon-wrapper {
+    margin-right: 8px;
+    width: 15px;
+    height: 15px;
+    cursor: pointer;
+  }
+}

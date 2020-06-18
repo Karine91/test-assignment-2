@@ -1,6 +1,13 @@
 @import "./variables.scss";
 
+.tasks-wrapper {
+  overflow-y: auto;
+}
 .tasks-list {
+  padding: 5px;
+  &:empty {
+    display: none;
+  }
 }
 
 .task {
@@ -10,4 +17,30 @@
   color: $text;
   padding: 8px 12px;
   margin-bottom: 8px;
+  position: relative;
+
+  &__inner {
+    display: flex;
+    padding-right: 25px;
+  }
+
+  &__text {
+    word-break: break-all;
+    max-height: 175px;
+    overflow: hidden;
+  }
+  &:last-child {
+    margin: 0;
+  }
+}
+
+.actions {
+  margin-left: auto;
+  position: absolute;
+  top: 5px;
+  right: 12px;
+}
+
+.add-new-task {
+  padding-top: 10px;
 }

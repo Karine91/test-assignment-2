@@ -1,12 +1,19 @@
 import db from "../utils/firebase";
 class Task {
-  constructor(description, columnId) {
+  constructor({ description, columnId, id }) {
     this.description = description;
     this.columnId = columnId;
+    this.taskId = id;
   }
 
   save() {
-    return db.ref("tasks").push(this);
+    if (this.taskId) {
+      return;
+    }
+    return db.ref("tasks").push({
+      description: this.description,
+      columnId: this.columnId,
+    });
   }
 
   static fetchAll() {
