@@ -36,7 +36,8 @@ class AddFormTask extends AddForm {
           description: this.formData.description,
           columnId: this.columnId,
         });
-      });
+      })
+      .catch((err) => console.log(err));
   }
   render() {
     this.root.classList.add("add-task-element");

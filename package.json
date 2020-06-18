@@ -28,7 +28,6 @@
     "svg-sprite-loader": "^5.0.0",
     "svg-transform-loader": "^2.0.13",
     "svgo-loader": "^2.2.1",
-    "url-loader": "^4.1.0",
     "webpack": "^4.43.0",
     "webpack-cli": "^3.3.11",
     "webpack-dev-server": "^3.11.0"

@@ -7,23 +7,13 @@ class App {
     this.root = document.getElementById("app");
     this.init = this.init.bind(this);
     this.render = this.render.bind(this);
-    this.update = this.update.bind(this);
-  }
-
-  update() {
-    this.root.innerHTML = "";
-    this.init();
-  }
-
-  render(data) {
-    const board = new Board(data);
-    this.element = board.render();
-    this.root.appendChild(this.element);
   }
 
   async init() {
-    const columns = await ColumnModel.fetchAll();
-    const tasks = await TasksModel.fetchAll();
+    const [columns, tasks] = await Promise.all([
+      ColumnModel.fetchAll(),
+      TasksModel.fetchAll(),
+    ]);
 
     const fullData = columns.map((column) => {
       const columnTasks = tasks.filter(
@@ -35,8 +25,11 @@ class App {
       };
     });
 
-    console.log(fullData);
-    this.render(fullData);
+    return fullData;
+  }
+
+  render(data) {
+    this.root.appendChild(new Board(data).render());
   }
 }
 

@@ -13,9 +13,9 @@ class Event {
     this.handlers.delete(idx);
   }
 
-  fire(sender, args) {
+  fire(args) {
     this.handlers.forEach((handler) => {
-      handler(sender, args);
+      handler(args);
     });
   }
 }

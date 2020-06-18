@@ -2,9 +2,11 @@ import EditFormTask from "./EditFormTask";
 import Menu from "./Menu";
 import Modal from "./Modal";
 
+import TaskModel from "../models/Task";
+
 import "../assets/styles/task.scss";
 
-import { addTaskEvent } from "../app";
+import { deleteColumnEvent } from "../app";
 
 class Task {
   constructor(task) {
@@ -14,6 +16,7 @@ class Task {
     this.deleteTask = this.deleteTask.bind(this);
     this.onEdit = this.onEdit.bind(this);
     this.hideModal = this.hideModal.bind(this);
+    this.onDeleteColumn = this.onDeleteColumn.bind(this);
 
     this.menuOptions = [
       { name: "Редактировать", handler: this.updateTask },
@@ -21,18 +24,33 @@ class Task {
     ];
 
     this.menu = new Menu(this.menuOptions);
-    this.wrapper = document.createElement("div");
+    this.root = document.createElement("div");
     this.modal = null;
     this.descriptionElement = null;
+
+    this.subId = deleteColumnEvent.subscribe(
+      this.onDeleteColumn
+    );
+  }
+
+  onDeleteColumn(columnId) {
+    if (columnId === this.task.columnId) {
+      this.deleteTask();
+    }
   }
 
   deleteTask() {
-    console.log("delete task");
-    this.menu.onMenuClose();
+    TaskModel.delete(this.task.id)
+      .then(() => {
+        this.menu.removeListeners();
+        deleteColumnEvent.unsubscribe(this.subId);
+        this.root.remove();
+        this.menu.onMenuClose();
+      })
+      .catch((err) => console.log(err));
   }
 
   updateTask() {
-    console.log("ukpdate task");
     this.menu.onMenuClose();
     this.showModal();
   }
@@ -50,10 +68,11 @@ class Task {
       onCloseHandler: this.hideModal,
       inputValue: this.task.description,
       columnId: this.task.columnId,
+      taskId: this.task.id,
     }).render();
     modalContent.appendChild(form);
     this.modal = new Modal(modalContent).render();
-    this.wrapper.appendChild(this.modal);
+    this.root.appendChild(this.modal);
   }
 
   hideModal() {
@@ -62,25 +81,30 @@ class Task {
 
   createTaskElement() {
     const div = document.createElement("div");
+    div.className = "task__inner";
+
     const textEl = document.createElement("div");
     textEl.innerText = this.task.description;
     textEl.className = "task__text";
+    this.descriptionElement = textEl;
+
     div.appendChild(textEl);
-    this.descriptionElement = div;
+
     const actions = document.createElement("div");
-    actions.className = "actions";
+    actions.className = "task__actions";
     div.appendChild(actions);
+
     const menu = this.menu.render();
     actions.appendChild(menu);
-    div.className = "task__inner";
+
     return div;
   }
 
   render() {
-    this.wrapper.className = "task";
-    this.wrapper.appendChild(this.createTaskElement());
+    this.root.className = "task";
+    this.root.appendChild(this.createTaskElement());
 
-    return this.wrapper;
+    return this.root;
   }
 }
 

@@ -34,10 +34,7 @@ class Board {
   }
 
   getColumnElement(column) {
-    const columnWrapper = document.createElement("div");
-    columnWrapper.className = "column-wrapper";
-    columnWrapper.appendChild(new Column(column).render());
-    return columnWrapper;
+    return new Column(column).render();
   }
 
   render() {

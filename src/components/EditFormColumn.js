@@ -4,26 +4,31 @@ import Column from "../models/Column";
 
 import { addColumnEvent } from "../app";
 
-class AddFormColumn extends AddForm {
-  constructor(onCloseHandler) {
+class EditFormColumn extends AddForm {
+  constructor({
+    onCloseHandler,
+    inputValue,
+    onSubmit,
+    columnId,
+  }) {
     super({
       placeholder: "Введите название колонки",
-      btnTitle: "Добавить колонку",
+      btnTitle: "Редактировать колонку",
       inputName: "title",
+      inputValue,
       onCloseHandler,
     });
+
+    this.columnId = columnId;
+    this.onSubmitCallback = onSubmit;
   }
 
   onSubmit(e) {
     super.onSubmit(e);
-    new Column({ title: this.formData.title })
-      .save()
+    Column.edit(this.columnId, this.formData.title)
       .then((ref) => {
-        this.onCloseClick();
-        addColumnEvent.fire({
-          id: ref.key,
-          title: this.formData.title,
-        });
+        this.onSubmitCallback(this.formData.title);
+        this.onCloseClick(this.formData.title);
       })
       .catch((err) => console.log(err));
   }
@@ -34,4 +39,4 @@ class AddFormColumn extends AddForm {
   }
 }
 
-export default AddFormColumn;
+export default EditFormColumn;

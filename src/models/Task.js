@@ -1,19 +1,27 @@
 import db from "../utils/firebase";
 class Task {
-  constructor({ description, columnId, id }) {
+  constructor({ description, columnId }) {
     this.description = description;
     this.columnId = columnId;
-    this.taskId = id;
   }
 
   save() {
-    if (this.taskId) {
-      return;
-    }
     return db.ref("tasks").push({
       description: this.description,
       columnId: this.columnId,
     });
+  }
+
+  static edit(taskId, updates) {
+    if (taskId && updates) {
+      return db.ref(`tasks/${taskId}`).update(updates);
+    }
+  }
+
+  static delete(taskId) {
+    if (taskId) {
+      return db.ref(`tasks/${taskId}`).remove();
+    }
   }
 
   static fetchAll() {

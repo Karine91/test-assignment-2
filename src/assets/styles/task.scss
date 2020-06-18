@@ -32,13 +32,13 @@
   &:last-child {
     margin: 0;
   }
-}
 
-.actions {
-  margin-left: auto;
-  position: absolute;
-  top: 5px;
-  right: 12px;
+  &__actions {
+    margin-left: auto;
+    position: absolute;
+    top: 5px;
+    right: 12px;
+  }
 }
 
 .add-new-task {

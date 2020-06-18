@@ -10,6 +10,7 @@ class EditFormTask extends AddForm {
     columnId,
     inputValue,
     onSubmit,
+    taskId,
   }) {
     super({
       placeholder: "Введите название карточки",
@@ -21,6 +22,7 @@ class EditFormTask extends AddForm {
     });
     this.columnId = columnId;
     this.onSubmitCallback = onSubmit;
+    this.taskId = taskId;
   }
 
   getInputElement() {
@@ -31,13 +33,15 @@ class EditFormTask extends AddForm {
 
   onSubmit(e) {
     super.onSubmit(e);
-    this.onSubmitCallback(this.formData.description);
-    this.onCloseClick();
-    // new Task(this.formData.description, this.columnId)
-    //   .save()
-    //   .then((ref) => {
-    //     this.onCloseClick();
-    //   });
+
+    Task.edit(this.taskId, {
+      description: this.formData.description,
+    })
+      .then((ref) => {
+        this.onSubmitCallback(this.formData.description);
+        this.onCloseClick();
+      })
+      .catch((err) => console.log(err));
   }
   render() {
     this.root.classList.add("add-task-element");

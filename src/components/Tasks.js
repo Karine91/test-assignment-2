@@ -1,7 +1,7 @@
 import "../assets/styles/task.scss";
 import Task from "./Task";
 
-import { addTaskEvent } from "../app";
+import { addTaskEvent, deleteColumnEvent } from "../app";
 
 class Tasks {
   constructor(tasks = [], columnId) {
@@ -11,8 +11,23 @@ class Tasks {
     this.tasksListElement = document.createElement("div");
     this.tasksListElement.className = "tasks-list";
     this.addTask = this.addTask.bind(this);
+    this.onDeleteColumn = this.onDeleteColumn.bind(this);
 
-    this.subId = addTaskEvent.subscribe(this.addTask);
+    this.addTaskEventSubId = addTaskEvent.subscribe(
+      this.addTask
+    );
+    this.deleteColumnEventSubId = deleteColumnEvent.subscribe(
+      this.onDeleteColumn
+    );
+  }
+
+  onDeleteColumn(columnId) {
+    if (this.columnId === columnId) {
+      addTaskEvent.unsubscribe(this.addTaskEventSubId);
+      deleteColumnEvent.unsubscribe(
+        this.deleteColumnEventSubId
+      );
+    }
   }
 
   addTask(task) {
