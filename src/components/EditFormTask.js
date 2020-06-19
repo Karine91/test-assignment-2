@@ -7,7 +7,6 @@ import { addTaskEvent } from "../app";
 class EditFormTask extends AddForm {
   constructor({
     onCloseHandler,
-    columnId,
     inputValue,
     onSubmit,
     taskId,
@@ -20,7 +19,6 @@ class EditFormTask extends AddForm {
       onCloseHandler,
       tag: "textarea",
     });
-    this.columnId = columnId;
     this.onSubmitCallback = onSubmit;
     this.taskId = taskId;
   }

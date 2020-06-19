@@ -6,7 +6,7 @@ import TaskModel from "../models/Task";
 
 import "../assets/styles/task.scss";
 
-import { deleteColumnEvent } from "../app";
+import { deleteColumnEvent, taskMovedEvent } from "../app";
 
 class Task {
   constructor(task) {
@@ -17,6 +17,7 @@ class Task {
     this.onEdit = this.onEdit.bind(this);
     this.hideModal = this.hideModal.bind(this);
     this.onDeleteColumn = this.onDeleteColumn.bind(this);
+    this.updateColumnId = this.updateColumnId.bind(this);
 
     this.menuOptions = [
       { name: "Редактировать", handler: this.updateTask },
@@ -31,6 +32,13 @@ class Task {
     this.subId = deleteColumnEvent.subscribe(
       this.onDeleteColumn
     );
+    this.onTaskMovedSubId = taskMovedEvent.subscribe(
+      this.updateColumnId
+    );
+  }
+
+  updateColumnId(columnId) {
+    this.task.columnId = columnId;
   }
 
   onDeleteColumn(columnId) {
@@ -44,6 +52,7 @@ class Task {
       .then(() => {
         this.menu.removeListeners();
         deleteColumnEvent.unsubscribe(this.subId);
+        taskMovedEvent.unsubscribe(this.onTaskMovedSubId);
         this.root.remove();
         this.menu.onMenuClose();
       })
@@ -67,7 +76,6 @@ class Task {
       onSubmit: this.onEdit,
       onCloseHandler: this.hideModal,
       inputValue: this.task.description,
-      columnId: this.task.columnId,
       taskId: this.task.id,
     }).render();
     modalContent.appendChild(form);
@@ -102,6 +110,7 @@ class Task {
 
   render() {
     this.root.className = "task";
+    this.root.setAttribute("data-id", this.task.id);
     this.root.appendChild(this.createTaskElement());
 
     return this.root;

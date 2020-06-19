@@ -8,6 +8,7 @@ import Event from "./utils/Event";
 export const addColumnEvent = new Event();
 export const addTaskEvent = new Event();
 export const deleteColumnEvent = new Event();
+export const taskMovedEvent = new Event();
 
 document.addEventListener("DOMContentLoaded", () => {
   const app = new App();

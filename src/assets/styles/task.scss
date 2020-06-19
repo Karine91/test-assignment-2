@@ -21,6 +21,7 @@
 
   &__inner {
     display: flex;
+
     padding-right: 25px;
   }
 
@@ -38,6 +39,25 @@
     position: absolute;
     top: 5px;
     right: 12px;
+  }
+
+  &__ghost {
+    overflow: hidden;
+    position: relative;
+    &:after {
+      content: "";
+      background: $gray;
+      position: absolute;
+      top: 0;
+      right: 0;
+      left: 0;
+      bottom: 0;
+    }
+  }
+
+  &__drag {
+    transform: rotate(5deg);
+    cursor: move;
   }
 }
 

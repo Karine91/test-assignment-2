@@ -6,10 +6,11 @@ import Modal from "./Modal";
 
 import Menu from "./Menu";
 import ColumnModel from "../models/Column";
+import TaskModel from "../models/Task";
 
 import Sortable from "sortablejs";
 
-import { deleteColumnEvent } from "../app";
+import { deleteColumnEvent, taskMovedEvent } from "../app";
 
 class Column {
   constructor({ id, title, tasks = [] }) {
@@ -21,6 +22,9 @@ class Column {
     this.deleteColumn = this.deleteColumn.bind(this);
     this.onEdit = this.onEdit.bind(this);
     this.hideModal = this.hideModal.bind(this);
+    this.saveColumnPosition = this.saveColumnPosition.bind(
+      this
+    );
 
     this.menuOptions = [
       { name: "Редактировать", handler: this.updateColumn },
@@ -93,6 +97,20 @@ class Column {
     return header;
   }
 
+  saveColumnPosition(evt) {
+    const columnIdFrom = evt.from.dataset.id;
+    if (columnIdFrom !== this.id) {
+      const taskId = evt.clone.dataset.id;
+      TaskModel.edit(taskId, {
+        columnId: this.id,
+      })
+        .then(() => {
+          taskMovedEvent.fire(this.id);
+        })
+        .catch((err) => console.log(err));
+    }
+  }
+
   render() {
     this.root.className = "column-wrapper";
     const columnElement = document.createElement("div");
@@ -103,6 +121,11 @@ class Column {
 
     const sortable = Sortable.create(tasks, {
       group: "columns",
+      ghostClass: "task__ghost",
+      chosenClass: "task__chosen",
+      dragClass: "task__drag",
+      forceFallback: true,
+      onAdd: this.saveColumnPosition,
     });
 
     const tasksWrapper = document.createElement("div");

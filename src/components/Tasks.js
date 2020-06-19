@@ -46,6 +46,11 @@ class Tasks {
       );
     });
 
+    this.tasksListElement.setAttribute(
+      "data-id",
+      this.columnId
+    );
+
     return this.tasksListElement;
   }
 }
