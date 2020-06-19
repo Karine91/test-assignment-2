@@ -11,6 +11,7 @@ class Header {
 
     this.user = user;
     this.buttonElement = null;
+    this.userInfoElement = null;
     this.btnLoginText = "Войти с Google";
     this.btnLogoutText = "Выйти";
   }
@@ -19,9 +20,10 @@ class Header {
     this.user.login().then(() => {
       this.buttonElement.innerText = this.btnLogoutText;
       this.buttonElement.onclick = this.onLogout;
-      this.root.prepend(
-        this.createUserIfoBlock(this.user.user.displayName)
+      this.userInfoElement = this.createUserIfoBlock(
+        this.user.user.displayName
       );
+      this.root.prepend(this.userInfoElement);
     });
   }
 
@@ -29,6 +31,7 @@ class Header {
     this.user.logout().then(() => {
       this.buttonElement.innerText = this.btnLoginText;
       this.buttonElement.onclick = this.onLogin;
+      this.userInfoElement.innerText = "";
     });
   }
 
