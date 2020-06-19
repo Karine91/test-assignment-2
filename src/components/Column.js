@@ -72,7 +72,6 @@ class Column {
     }).render();
     modalContent.appendChild(form);
     this.modal = new Modal(modalContent).render();
-    this.root.appendChild(this.modal);
   }
 
   hideModal() {

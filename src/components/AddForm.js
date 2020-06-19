@@ -10,6 +10,7 @@ class AddForm {
     onCloseHandler,
     tag = "input",
     inputValue = "",
+    inputRequired,
   }) {
     this.placeholder = placeholder;
     this.btnTitle = btnTitle;
@@ -17,6 +18,7 @@ class AddForm {
     this.inputValue = inputValue;
     this.onCloseHandler = onCloseHandler;
     this.tag = tag;
+    this.inputRequired = inputRequired;
 
     this.formData = {};
 
@@ -54,6 +56,7 @@ class AddForm {
     input.placeholder = this.placeholder;
     input.name = this.inputName;
     input.value = this.inputValue;
+    input.required = this.inputRequired;
     input.onchange = this.onInputChange;
     return input;
   }

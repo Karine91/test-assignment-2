@@ -17,6 +17,7 @@ class EditFormColumn extends AddForm {
       inputName: "title",
       inputValue,
       onCloseHandler,
+      inputRequired: true,
     });
 
     this.columnId = columnId;

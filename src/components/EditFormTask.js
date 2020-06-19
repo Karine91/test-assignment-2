@@ -18,6 +18,7 @@ class EditFormTask extends AddForm {
       inputValue,
       onCloseHandler,
       tag: "textarea",
+      inputRequired: true,
     });
     this.onSubmitCallback = onSubmit;
     this.taskId = taskId;

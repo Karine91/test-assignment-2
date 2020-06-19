@@ -11,6 +11,7 @@ class AddFormColumn extends AddForm {
       btnTitle: "Добавить колонку",
       inputName: "title",
       onCloseHandler,
+      inputRequired: true,
     });
   }
 

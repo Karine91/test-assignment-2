@@ -12,6 +12,7 @@ class AddFormTask extends AddForm {
       inputName: "description",
       onCloseHandler,
       tag: "textarea",
+      inputRequired: true,
     });
     this.columnId = columnId;
   }
