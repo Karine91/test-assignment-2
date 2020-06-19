@@ -21,7 +21,7 @@ module.exports = (env, argv) => {
     entry: "./src/app.js",
     mode: argv.mode || "development",
     output: {
-      path: path.join(__dirname, "dist"),
+      path: path.join(__dirname, "docs"),
       filename: "bundle.js",
     },
     module: {
