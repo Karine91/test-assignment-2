@@ -22,7 +22,7 @@ module.exports = (env, argv) => {
     mode: argv.mode || "development",
     output: {
       path: path.join(__dirname, "docs"),
-      filename: "bundle.js",
+      filename: "bundle.[hash].js",
     },
     module: {
       rules: [
@@ -120,7 +120,9 @@ module.exports = (env, argv) => {
     plugins: [
       new CleanWebpackPlugin(),
       new MiniCssExtractPlugin({
-        filename: "css/[name].css",
+        filename: isDevMode
+          ? "css/[name].css"
+          : "css/[name].[hash].css",
       }),
       new HtmlWebpackPlugin({
         template: "src/views/index.html",
