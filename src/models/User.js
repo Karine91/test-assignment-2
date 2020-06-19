@@ -14,10 +14,13 @@ class User {
       .auth()
       .signInWithPopup(googleAuthProvider)
       .then((data) => {
+        console.log(data);
         this.user = data.user;
         this.isAuthenticated = true;
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        throw err;
+      });
   }
 
   logout() {
@@ -27,7 +30,9 @@ class User {
       .then(() => {
         this.isAuthenticated = false;
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        throw err;
+      });
   }
 }
 

@@ -17,22 +17,28 @@ class Header {
   }
 
   onLogin() {
-    this.user.login().then(() => {
-      this.buttonElement.innerText = this.btnLogoutText;
-      this.buttonElement.onclick = this.onLogout;
-      this.userInfoElement = this.createUserIfoBlock(
-        this.user.user.displayName
-      );
-      this.root.prepend(this.userInfoElement);
-    });
+    this.user
+      .login()
+      .then(() => {
+        this.buttonElement.innerText = this.btnLogoutText;
+        this.buttonElement.onclick = this.onLogout;
+        this.userInfoElement = this.createUserIfoBlock(
+          this.user.user.displayName
+        );
+        this.root.prepend(this.userInfoElement);
+      })
+      .catch((err) => console.log(err));
   }
 
   onLogout() {
-    this.user.logout().then(() => {
-      this.buttonElement.innerText = this.btnLoginText;
-      this.buttonElement.onclick = this.onLogin;
-      this.userInfoElement.innerText = "";
-    });
+    this.user
+      .logout()
+      .then(() => {
+        this.buttonElement.innerText = this.btnLoginText;
+        this.buttonElement.onclick = this.onLogin;
+        this.userInfoElement.innerText = "";
+      })
+      .catch((err) => console.log(err));
   }
 
   createLoginButton() {
