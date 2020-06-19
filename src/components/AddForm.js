@@ -22,6 +22,7 @@ class AddForm {
 
     this.root = document.createElement("div");
     this.input = null;
+    this.formChanged = false;
 
     this.render = this.render.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
@@ -41,6 +42,10 @@ class AddForm {
   onInputChange(e) {
     const { name, value } = e.target;
     this.formData = { ...this.formData, [name]: value };
+    console.log(value);
+    if (!this.formChanged) {
+      this.formChanged = true;
+    }
   }
 
   getInputElement() {

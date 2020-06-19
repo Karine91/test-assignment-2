@@ -24,6 +24,9 @@ class AddFormTask extends AddForm {
 
   onSubmit(e) {
     super.onSubmit(e);
+    if (!this.formChanged) {
+      return;
+    }
     new Task({
       description: this.formData.description,
       columnId: this.columnId,

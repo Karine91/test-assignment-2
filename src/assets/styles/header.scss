@@ -1,0 +1,35 @@
+@import "./variables.scss";
+
+.header {
+  padding: 15px;
+  display: flex;
+  border-bottom: 1px solid rgba($gray, 0.5);
+  height: 70px;
+
+  &__user-info {
+    color: $white;
+  }
+
+  &__login-btn {
+    margin-left: auto;
+    font-family: $fontFamily;
+    background: $green;
+    border: 2px solid transparent;
+    padding: 8px;
+    color: $white;
+    font-weight: bold;
+    border-radius: 3px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all ease 0.3s;
+
+    &:hover {
+      background: darken($green, 10);
+      border: 2px solid $green;
+    }
+    &:focus {
+      outline: none;
+      border: 2px solid $green;
+    }
+  }
+}

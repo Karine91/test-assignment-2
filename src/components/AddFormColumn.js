@@ -16,6 +16,9 @@ class AddFormColumn extends AddForm {
 
   onSubmit(e) {
     super.onSubmit(e);
+    if (!this.formChanged) {
+      return;
+    }
     new Column({ title: this.formData.title })
       .save()
       .then((ref) => {

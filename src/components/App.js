@@ -1,12 +1,15 @@
 import Board from "./Board";
 import ColumnModel from "../models/Column";
 import TasksModel from "../models/Task";
+import Header from "./Header";
+import User from "../models/User";
 
 class App {
   constructor() {
     this.root = document.getElementById("app");
     this.init = this.init.bind(this);
     this.render = this.render.bind(this);
+    this.user = new User();
   }
 
   async init() {
@@ -29,6 +32,7 @@ class App {
   }
 
   render(data) {
+    this.root.appendChild(new Header(this.user).render());
     this.root.appendChild(new Board(data).render());
   }
 }
