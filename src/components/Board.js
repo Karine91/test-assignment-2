@@ -48,9 +48,11 @@ class Board {
       this.addColumnElement
     );
     this.columnListElement.className = "column-list";
+    this.columnListElement.id = "column-list";
     this.root.appendChild(this.columnListElement);
 
     this.root.className = "board";
+    this.root.id = "board";
     return this.root;
   }
 }

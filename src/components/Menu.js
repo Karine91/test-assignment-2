@@ -11,9 +11,8 @@ class Menu {
     this.onMenuClose = this.onMenuClose.bind(this);
 
     this.dropdownElement = null;
+
     this.menuBtn = null;
-    this.coordX = 0;
-    this.coordY = 0;
 
     this.clickAwayListener = this.clickAwayListener.bind(
       this
@@ -39,6 +38,7 @@ class Menu {
   clickAwayListener(e) {
     if (
       !this.menuBtn.contains(e.target) &&
+      this.dropdownElement &&
       !this.dropdownElement.contains(e.target)
     ) {
       this.onMenuClose();
@@ -73,31 +73,62 @@ class Menu {
   }
 
   onMenuOpen(e) {
+    if (this.isOpen) return;
+    this.isOpen = true;
+    let portal = document.getElementById("portal");
+    const columnListElement = document.getElementById(
+      "column-list"
+    );
+
+    portal = this.createDropDownPortal();
+
+    columnListElement.appendChild(portal);
+
+    if (!this.dropdownPortal) {
+      this.dropdownElement = this.createDropdownMenu();
+      portal.appendChild(this.dropdownElement);
+    }
+
     const rectBounds = this.menuBtn.getBoundingClientRect();
+    const board = document.getElementById("board");
     this.dropdownElement.style.top =
-      rectBounds.top + this.menuBtn.clientHeight - 5 + "px";
+      rectBounds.top +
+      this.menuBtn.clientHeight -
+      5 -
+      board.offsetTop -
+      columnListElement.offsetTop +
+      "px";
     this.dropdownElement.style.left =
-      rectBounds.left + "px";
+      rectBounds.left +
+      columnListElement.scrollLeft -
+      this.menuBtn.offsetWidth / 2 +
+      "px";
     this.dropdownElement.classList.add(
       "menu__dropdown--open"
     );
   }
 
   onMenuClose() {
-    this.dropdownElement.classList.remove(
-      "menu__dropdown--open"
+    this.isOpen = false;
+    this.dropdownElement.remove();
+  }
+
+  createDropDownPortal() {
+    const dropdownPortal = document.createElement("div");
+    dropdownPortal.id = "portal";
+    const columnListElement = document.getElementById(
+      "column-list"
     );
+    return dropdownPortal;
   }
 
   render() {
     const menu = document.createElement("div");
     menu.className = "menu";
     this.menuBtn = this.createButton();
-    const portal = document.getElementById("portal");
-    this.dropdownElement = this.createDropdownMenu();
 
     menu.appendChild(this.menuBtn);
-    portal.appendChild(this.dropdownElement);
+
     return menu;
   }
 }

@@ -10,7 +10,11 @@ import TaskModel from "../models/Task";
 
 import Sortable from "sortablejs";
 
-import { deleteColumnEvent, taskMovedEvent } from "../app";
+import {
+  deleteColumnEvent,
+  taskMovedEvent,
+  taskStartDragEvent,
+} from "../app";
 
 class Column {
   constructor({ id, title, tasks = [] }) {
@@ -22,6 +26,7 @@ class Column {
     this.deleteColumn = this.deleteColumn.bind(this);
     this.onEdit = this.onEdit.bind(this);
     this.hideModal = this.hideModal.bind(this);
+    this.onDragStart = this.onDragStart.bind(this);
     this.saveColumnPosition = this.saveColumnPosition.bind(
       this
     );
@@ -111,6 +116,11 @@ class Column {
     }
   }
 
+  onDragStart(e) {
+    const taskId = e.item.dataset.id;
+    taskStartDragEvent.fire(taskId);
+  }
+
   render() {
     this.root.className = "column-wrapper";
     const columnElement = document.createElement("div");
@@ -125,6 +135,8 @@ class Column {
       chosenClass: "task__chosen",
       dragClass: "task__drag",
       forceFallback: true,
+      filter: ".menu",
+      onStart: this.onDragStart,
       onAdd: this.saveColumnPosition,
     });
 

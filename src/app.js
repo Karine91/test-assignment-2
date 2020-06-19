@@ -9,6 +9,7 @@ export const addColumnEvent = new Event();
 export const addTaskEvent = new Event();
 export const deleteColumnEvent = new Event();
 export const taskMovedEvent = new Event();
+export const taskStartDragEvent = new Event();
 
 document.addEventListener("DOMContentLoaded", () => {
   const app = new App();
