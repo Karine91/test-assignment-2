@@ -100,7 +100,6 @@ module.exports = (env, argv) => {
       ],
     },
     optimization: {
-      minimize: !isDevMode,
       minimizer: [
         new TerserJSPlugin({}),
         new OptimizeCSSAssetsPlugin({}),
