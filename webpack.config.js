@@ -18,7 +18,7 @@ module.exports = (env, argv) => {
   const isDevMode = argv.mode !== "production";
 
   return {
-    entry: "./src/app.js",
+    entry: ["@babel/polyfill", "./src/app.js"],
     mode: argv.mode || "development",
     output: {
       path: path.join(__dirname, "docs"),
@@ -27,7 +27,14 @@ module.exports = (env, argv) => {
     module: {
       rules: [
         {
-          loader: "babel-loader",
+          use: {
+            loader: "babel-loader",
+            options: {
+              plugins: [
+                "@babel/plugin-proposal-object-rest-spread",
+              ],
+            },
+          },
           test: /\.js$/,
           exclude: /node_modules/,
         },

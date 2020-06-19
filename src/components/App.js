@@ -10,9 +10,15 @@ class App {
     this.init = this.init.bind(this);
     this.render = this.render.bind(this);
     this.user = new User();
+
+    this.loadingElement = document.createElement("div");
+    this.loadingElement.className = "loading";
+    this.loadingElement.innerText = "Loading...";
   }
 
   async init() {
+    this.root.appendChild(this.loadingElement);
+
     const [columns, tasks] = await Promise.all([
       ColumnModel.fetchAll(),
       TasksModel.fetchAll(),
@@ -28,6 +34,7 @@ class App {
       };
     });
 
+    this.loadingElement.remove();
     return fullData;
   }
 

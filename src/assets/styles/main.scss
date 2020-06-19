@@ -35,3 +35,12 @@ body {
     fill: darken($textLight, 10);
   }
 }
+
+.loading {
+  color: $white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  font-size: 18px;
+}
