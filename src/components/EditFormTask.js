@@ -2,8 +2,6 @@ import AddForm from "./AddForm";
 
 import Task from "../models/Task";
 
-import { addTaskEvent } from "../app";
-
 class EditFormTask extends AddForm {
   constructor({
     onCloseHandler,

@@ -2,8 +2,6 @@ import AddForm from "./AddForm";
 
 import Column from "../models/Column";
 
-import { addColumnEvent } from "../app";
-
 class EditFormColumn extends AddForm {
   constructor({
     onCloseHandler,
