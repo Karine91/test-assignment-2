@@ -1,6 +1,6 @@
 import Board from "./Board";
 import ColumnModel from "../models/Column";
-import TasksModel from "../models/Task";
+
 import Header from "./Header";
 import User from "../models/User";
 
@@ -19,23 +19,10 @@ class App {
   async init() {
     this.root.appendChild(this.loadingElement);
 
-    const [columns, tasks] = await Promise.all([
-      ColumnModel.fetchAll(),
-      TasksModel.fetchAll(),
-    ]);
-
-    const fullData = columns.map((column) => {
-      const columnTasks = tasks.filter(
-        (task) => task.columnId === column.id
-      );
-      return {
-        ...column,
-        tasks: columnTasks,
-      };
-    });
+    const columns = await ColumnModel.fetchAll();
 
     this.loadingElement.remove();
-    return fullData;
+    return columns;
   }
 
   render(data) {

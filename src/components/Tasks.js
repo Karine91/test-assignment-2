@@ -30,11 +30,12 @@ class Tasks {
     }
   }
 
-  addTask(task) {
-    if (this.columnId === task.columnId) {
+  addTask({ task, columnId }) {
+    if (this.columnId === columnId) {
       this.tasks.push(task);
+
       this.tasksListElement.appendChild(
-        new Task(task).render()
+        new Task(task, this.columnId).render()
       );
     }
   }
@@ -42,7 +43,7 @@ class Tasks {
   render() {
     this.tasks.forEach((task) => {
       this.tasksListElement.appendChild(
-        new Task(task).render()
+        new Task(task, this.columnId).render()
       );
     });
 

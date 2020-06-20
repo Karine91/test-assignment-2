@@ -6,21 +6,17 @@ import TaskModel from "../models/Task";
 
 import "../assets/styles/task.scss";
 
-import {
-  deleteColumnEvent,
-  taskMovedEvent,
-  taskStartDragEvent,
-} from "../app";
+import { taskMovedEvent, taskStartDragEvent } from "../app";
 
 class Task {
-  constructor(task) {
+  constructor(task, columnId) {
     this.task = task;
+    this.columnId = columnId;
 
     this.updateTask = this.updateTask.bind(this);
     this.deleteTask = this.deleteTask.bind(this);
     this.onEdit = this.onEdit.bind(this);
     this.hideModal = this.hideModal.bind(this);
-    this.onDeleteColumn = this.onDeleteColumn.bind(this);
     this.updateColumnId = this.updateColumnId.bind(this);
     this.onTaskStartDrag = this.onTaskStartDrag.bind(this);
 
@@ -34,9 +30,6 @@ class Task {
     this.modal = null;
     this.descriptionElement = null;
 
-    this.deleteColumnSubId = deleteColumnEvent.subscribe(
-      this.onDeleteColumn
-    );
     this.onTaskMovedSubId = taskMovedEvent.subscribe(
       this.updateColumnId
     );
@@ -53,25 +46,21 @@ class Task {
     }
   }
 
-  updateColumnId({ taskId, columnId }) {
+  updateColumnId({ taskId, columnIdTo, columnIdFrom }) {
     if (taskId === this.task.id) {
-      this.task.columnId = columnId;
-    }
-  }
-
-  onDeleteColumn(columnId) {
-    if (columnId === this.task.columnId) {
-      this.deleteTask();
+      this.columnId = columnIdTo;
+      //Delete From Current column
+      TaskModel.delete(columnIdFrom, this.task.id);
+      // Create in another
+      new TaskModel(this.task).save(columnIdTo);
     }
   }
 
   deleteTask() {
-    TaskModel.delete(this.task.id)
+    TaskModel.delete(this.columnId, this.task.id)
       .then(() => {
         this.menu.removeListeners();
-        deleteColumnEvent.unsubscribe(
-          this.deleteColumnSubId
-        );
+
         taskMovedEvent.unsubscribe(this.onTaskMovedSubId);
         taskStartDragEvent.unsubscribe(
           this.onTaskDragStartSubId
@@ -100,6 +89,7 @@ class Task {
       onCloseHandler: this.hideModal,
       inputValue: this.task.description,
       taskId: this.task.id,
+      columnId: this.columnId,
     }).render();
     modalContent.appendChild(form);
     this.modal = new Modal(modalContent).render();

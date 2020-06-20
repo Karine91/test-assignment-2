@@ -30,14 +30,15 @@ class AddFormTask extends AddForm {
     }
     new Task({
       description: this.formData.description,
-      columnId: this.columnId,
     })
-      .save()
+      .save(this.columnId)
       .then((ref) => {
         this.onCloseClick();
         addTaskEvent.fire({
-          id: ref.key,
-          description: this.formData.description,
+          task: {
+            id: ref.key,
+            description: this.formData.description,
+          },
           columnId: this.columnId,
         });
       })

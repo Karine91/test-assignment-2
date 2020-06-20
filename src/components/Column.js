@@ -6,7 +6,6 @@ import Modal from "./Modal";
 
 import Menu from "./Menu";
 import ColumnModel from "../models/Column";
-import TaskModel from "../models/Task";
 
 import Sortable from "sortablejs";
 
@@ -105,16 +104,11 @@ class Column {
     const columnIdFrom = evt.from.dataset.id;
     if (columnIdFrom !== this.id) {
       const taskId = evt.clone.dataset.id;
-      TaskModel.edit(taskId, {
-        columnId: this.id,
-      })
-        .then(() => {
-          taskMovedEvent.fire({
-            columnId: this.id,
-            taskId,
-          });
-        })
-        .catch((err) => console.log(err));
+      taskMovedEvent.fire({
+        columnIdTo: this.id,
+        taskId,
+        columnIdFrom,
+      });
     }
   }
 

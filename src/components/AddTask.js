@@ -1,7 +1,5 @@
 import AddForm from "./AddForm";
 
-import Task from "../models/Task";
-
 import AddWrapper from "./AddWrapper";
 import AddFormTask from "./AddFormTask";
 import AddElement from "./AddElement";

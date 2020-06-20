@@ -1,44 +1,29 @@
 import db from "../utils/firebase";
 class Task {
-  constructor({ description, columnId }) {
+  constructor({ description }) {
     this.description = description;
-    this.columnId = columnId;
   }
 
-  save() {
-    return db.ref("tasks").push({
+  save(columnId) {
+    return db.ref(`columns/${columnId}/tasks`).push({
       description: this.description,
-      columnId: this.columnId,
     });
   }
 
-  static edit(taskId, updates) {
+  static edit(columnId, taskId, updates) {
     if (taskId && updates) {
-      return db.ref(`tasks/${taskId}`).update(updates);
+      return db
+        .ref(`columns/${columnId}/tasks/${taskId}`)
+        .update(updates);
     }
   }
 
-  static delete(taskId) {
+  static delete(columnId, taskId) {
     if (taskId) {
-      return db.ref(`tasks/${taskId}`).remove();
+      return db
+        .ref(`columns/${columnId}/tasks/${taskId}`)
+        .remove();
     }
-  }
-
-  static fetchAll() {
-    return db
-      .ref("tasks")
-      .once("value")
-      .then((snapshot) => {
-        const tasks = [];
-        snapshot.forEach((item) => {
-          tasks.push({
-            id: item.key,
-            ...item.val(),
-          });
-        });
-
-        return tasks;
-      });
   }
 }
 

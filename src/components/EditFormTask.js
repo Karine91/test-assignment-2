@@ -10,6 +10,7 @@ class EditFormTask extends AddForm {
     inputValue,
     onSubmit,
     taskId,
+    columnId,
   }) {
     super({
       placeholder: "Введите название карточки",
@@ -22,6 +23,7 @@ class EditFormTask extends AddForm {
     });
     this.onSubmitCallback = onSubmit;
     this.taskId = taskId;
+    this.columnId = columnId;
   }
 
   getInputElement() {
@@ -33,7 +35,7 @@ class EditFormTask extends AddForm {
   onSubmit(e) {
     super.onSubmit(e);
 
-    Task.edit(this.taskId, {
+    Task.edit(this.columnId, this.taskId, {
       description: this.formData.description,
     })
       .then((ref) => {

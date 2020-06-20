@@ -1,8 +1,9 @@
 import db from "../utils/firebase";
 
 class Column {
-  constructor({ title }) {
+  constructor({ title, tasks }) {
     this.title = title;
+    this.tasks = tasks;
   }
 
   save() {
@@ -26,9 +27,23 @@ class Column {
       .then((snapshot) => {
         const columns = [];
         snapshot.forEach((item) => {
+          const { title, tasks } = item.val();
+          let tasksArr;
+          if (tasks) {
+            tasksArr = Object.entries(tasks).map(
+              ([key, value]) => ({
+                id: key,
+                ...value,
+              })
+            );
+          } else {
+            tasksArr = [];
+          }
+
           columns.push({
             id: item.key,
-            ...item.val(),
+            title,
+            tasks: tasksArr,
           });
         });
 
