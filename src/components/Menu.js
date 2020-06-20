@@ -79,8 +79,9 @@ class Menu {
     const columnListElement = document.getElementById(
       "column-list"
     );
-
-    portal = this.createDropDownPortal();
+    if (!portal) {
+      portal = this.createDropDownPortal();
+    }
 
     columnListElement.appendChild(portal);
 
