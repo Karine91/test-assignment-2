@@ -111,7 +111,9 @@ class Menu {
 
   onMenuClose() {
     this.isOpen = false;
-    this.dropdownElement.remove();
+    if (this.dropdownElement) {
+      this.dropdownElement.remove();
+    }
   }
 
   createDropDownPortal() {
