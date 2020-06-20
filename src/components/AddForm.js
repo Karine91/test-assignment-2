@@ -43,7 +43,7 @@ class AddForm {
 
   onInputChange(e) {
     const { name, value } = e.target;
-    this.formData = { ...this.formData, [name]: value };
+    this.formData[name] = value;
 
     if (!this.formChanged) {
       this.formChanged = true;

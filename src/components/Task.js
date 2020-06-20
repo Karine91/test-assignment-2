@@ -55,7 +55,7 @@ class Task {
 
   updateColumnId(columnId) {
     if (columnId === this.task.columnId) {
-      this.task = { ...this.task, columnId };
+      this.task.columnId = columnId;
     }
   }
 
@@ -88,7 +88,7 @@ class Task {
   }
 
   onEdit(description) {
-    this.task = { ...this.task, description };
+    this.task.description = description;
     this.descriptionElement.innerText = description;
   }
 
