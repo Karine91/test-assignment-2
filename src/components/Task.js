@@ -53,8 +53,8 @@ class Task {
     }
   }
 
-  updateColumnId(columnId) {
-    if (columnId === this.task.columnId) {
+  updateColumnId({ taskId, columnId }) {
+    if (taskId === this.task.id) {
       this.task.columnId = columnId;
     }
   }

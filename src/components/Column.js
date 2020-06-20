@@ -109,7 +109,10 @@ class Column {
         columnId: this.id,
       })
         .then(() => {
-          taskMovedEvent.fire(this.id);
+          taskMovedEvent.fire({
+            columnId: this.id,
+            taskId,
+          });
         })
         .catch((err) => console.log(err));
     }
